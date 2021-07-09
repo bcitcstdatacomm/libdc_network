@@ -64,15 +64,15 @@ enum application_states
 
 struct dc_server_lifecycle
 {
-    int (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*create_socket)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    int (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*create_socket)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 };
 
 
@@ -108,56 +108,56 @@ void dc_server_lifecycle_destroy(const struct dc_posix_env *env, struct dc_serve
     *plifecycle = NULL;
 }
 
-void dc_server_lifecycle_set_create_settings(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_create_settings(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->create_settings = create_settings;
 }
 
-void dc_server_lifecycle_set_create_socket(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*create_socket)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_create_socket(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*create_socket)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->create_socket = create_socket;
 }
 
-void dc_server_lifecycle_set_set_sockopts(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_set_sockopts(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->set_sockopts = set_sockopts;
 }
 
 
-void dc_server_lifecycle_set_bind(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_bind(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->bind = bind;
 }
 
-void dc_server_lifecycle_set_listen(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_listen(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->listen = listen;
 }
 
-void dc_server_lifecycle_set_setup(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_setup(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->setup = setup;
 }
 
-void dc_server_lifecycle_set_accept(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_accept(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->accept = accept;
 }
 
-void dc_server_lifecycle_set_shutdown(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_shutdown(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->shutdown = shutdown;
 }
 
-void dc_server_lifecycle_set_destroy_settings(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, int (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+void dc_server_lifecycle_set_destroy_settings(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->destroy_settings = destroy_settings;
@@ -270,14 +270,20 @@ int dc_server_run(const struct dc_posix_env *env,
 
         if(DC_HAS_NO_ERROR(err))
         {
-            int from_state;
-            int to_state;
-
-            ret_val = dc_fsm_run(env, err, fsm_info, &from_state, &to_state, info, transitions);
+            dc_fsm_run(env, err, fsm_info, NULL, NULL, info, transitions);
             dc_fsm_info_destroy(env, &fsm_info);
         }
 
         destroy_lifecycle_func(env, &info->lifecycle);
+    }
+
+    if(DC_HAS_ERROR(err))
+    {
+        ret_val = -1;
+    }
+    else
+    {
+        ret_val = 0;
     }
 
     return ret_val;
@@ -290,9 +296,9 @@ static int create_settings(const struct dc_posix_env *env, struct dc_error *err,
 
     DC_TRACE(env);
     info    = arg;
-    ret_val = info->lifecycle->create_settings(env, err, info->configuration);
+    info->lifecycle->create_settings(env, err, info->configuration);
 
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = CREATE_SOCKET;
     }
@@ -311,9 +317,9 @@ static int create_socket(const struct dc_posix_env *env, struct dc_error *err, v
 
     DC_TRACE(env);
     info    = arg;
-    ret_val = info->lifecycle->create_socket(env, err, info->configuration);
+    info->lifecycle->create_socket(env, err, info->configuration);
 
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = SET_SOCKOPTS;
     }
@@ -332,14 +338,13 @@ static int set_sockopts(const struct dc_posix_env *env, struct dc_error *err, vo
 
     DC_TRACE(env);
     info    = arg;
-    ret_val = 0;
 
     if(info->lifecycle->set_sockopts)
     {
-        ret_val = info->lifecycle->set_sockopts(env, err, info->configuration);
+        info->lifecycle->set_sockopts(env, err, info->configuration);
     }
 
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = BIND;
     }
@@ -357,12 +362,10 @@ static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *a
     int ret_val;
 
     DC_TRACE(env);
-    info    = arg;
-    ret_val = 0;
+    info = arg;
+    info->lifecycle->bind(env, err, info->configuration);
 
-    ret_val = info->lifecycle->bind(env, err, info->configuration);
-
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = LISTEN;
     }
@@ -380,12 +383,10 @@ static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void 
     int ret_val;
 
     DC_TRACE(env);
-    info    = arg;
-    ret_val = 0;
+    info = arg;
+    info->lifecycle->listen(env, err, info->configuration);
 
-    ret_val = info->lifecycle->listen(env, err, info->configuration);
-
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = SETUP;
     }
@@ -404,14 +405,13 @@ static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg
 
     DC_TRACE(env);
     info    = arg;
-    ret_val = 0;
 
     if(info->lifecycle->setup)
     {
-        ret_val = info->lifecycle->setup(env, err, info->configuration);
+        info->lifecycle->setup(env, err, info->configuration);
     }
 
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = ACCEPT;
     }
@@ -427,18 +427,17 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
 {
     struct dc_server_info *info;
     int ret_val;
+    bool shutdown;
 
     DC_TRACE(env);
-    info    = arg;
-    ret_val = 0;
+    info     = arg;
+    shutdown = info->lifecycle->accept(env, err, info->configuration);
 
-    ret_val = info->lifecycle->accept(env, err, info->configuration);
-
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = ACCEPT;
     }
-    else if(ret_val > 0)
+    else if(shutdown)
     {
         ret_val = SHUTDOWN;
     }
@@ -456,12 +455,10 @@ static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, voi
     int ret_val;
 
     DC_TRACE(env);
-    info    = arg;
-    ret_val = 0;
+    info = arg;
+    info->lifecycle->shutdown(env, err, info->configuration);
 
-    ret_val = info->lifecycle->shutdown(env, err, info->configuration);
-
-    if(ret_val == 0)
+    if(DC_HAS_NO_ERROR(err))
     {
         ret_val = DESTROY_SETTINGS;
     }
