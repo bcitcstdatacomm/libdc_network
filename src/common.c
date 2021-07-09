@@ -16,3 +16,116 @@
 
 
 #include "common.h"
+#include <dc_posix/string.h>
+#include <dc_posix/netdb.h>
+#include <dc_posix/sys/socket.h>
+
+
+void dc_network_get_addresses(const struct dc_posix_env *env, struct dc_error *err, int family, int sock_type, const char *hostname, struct addrinfo **result)
+{
+    struct addrinfo hints;
+
+    DC_TRACE(env);
+    dc_memset(env, &hints, 0, sizeof(hints));
+    hints.ai_family    = family;
+    hints.ai_socktype  = sock_type;
+    hints.ai_flags    |= AI_CANONNAME;
+    dc_getaddrinfo(env, err, hostname, NULL, &hints, result);
+}
+
+int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *err, struct addrinfo *addr)
+{
+    int socket_fd;
+
+    DC_TRACE(env);
+
+    socket_fd = dc_socket(env,
+                          err,
+                          addr->ai_family,
+                          addr->ai_socktype,
+                          addr->ai_protocol);
+
+    return socket_fd;
+}
+
+void dc_network_reuse_socket(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool reuse_address)
+{
+    static const int reuse_flag        = 1;
+    static const int do_not_reuse_flag = 0;
+    const int *flag;
+
+    DC_TRACE(env);
+
+    if(reuse_address)
+    {
+        flag = &reuse_flag;
+    }
+    else
+    {
+        flag = &do_not_reuse_flag;
+    }
+
+    dc_setsockopt(env, err, socket_fd, SOL_SOCKET, SO_REUSEADDR, flag, sizeof(int));
+}
+
+void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, struct sockaddr *sockaddr, uint16_t port)
+{
+    socklen_t sockaddr_size;
+
+    DC_TRACE(env);
+
+    if(sockaddr->sa_family == AF_INET)
+    {
+        struct sockaddr_in *addr_in;
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-align"
+        addr_in = (struct sockaddr_in *)sockaddr;
+#pragma GCC diagnostic pop
+        addr_in->sin_port = htons(port);
+        sockaddr_size = sizeof(struct sockaddr_in);
+    }
+    else if(sockaddr->sa_family == AF_INET)
+    {
+        struct sockaddr_in6 *addr_in;
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-align"
+        addr_in = (struct sockaddr_in6 *)sockaddr;
+#pragma GCC diagnostic pop
+        addr_in->sin6_port = htons(port);
+        sockaddr_size = sizeof(struct sockaddr_in6);
+    }
+    else
+    {
+        DC_REPORT_USER(env, err, "sockaddr->sa_family is wrong", -1);
+    }
+
+    if(DC_HAS_NO_ERROR(err))
+    {
+        dc_bind(env,
+                err,
+                socket_fd,
+                sockaddr,
+                sockaddr_size);
+    }
+}
+
+void dc_network_listen(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int backlog)
+{
+    DC_TRACE(env);
+    dc_listen(env,
+              err,
+              socket_fd,
+              backlog);
+}
+
+int dc_network_accept(const struct dc_posix_env *env, struct dc_error *err, int server_socket_fd)
+{
+    int client_socket_fd;
+
+    DC_TRACE(env);
+    client_socket_fd = dc_accept(env, err, server_socket_fd, NULL, NULL);
+
+    return client_socket_fd;
+}

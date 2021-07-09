@@ -16,6 +16,7 @@
 
 
 #include "server.h"
+#include "common.h"
 #include <dc_fsm/fsm.h>
 #include <dc_posix/stdlib.h>
 #include <dc_posix/string.h>
@@ -28,7 +29,7 @@ static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *a
 static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-static int shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 static int destroy_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 static int create_settings_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 static int create_socket_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
@@ -243,7 +244,7 @@ int dc_server_run(const struct dc_posix_env *env,
             { LISTEN,                SETUP,                 setup                 },
             { SETUP,                 ACCEPT,                do_accept             },
             { ACCEPT,                ACCEPT,                do_accept             },
-            { ACCEPT,                SHUTDOWN,              shutdown              },
+            { ACCEPT,                SHUTDOWN,              do_shutdown              },
             { SHUTDOWN,              DESTROY_SETTINGS,      destroy_settings      },
             { DESTROY_SETTINGS,      DC_FSM_EXIT,           NULL                  },
             { CREATE_SETTINGS,       CREATE_SETTINGS_ERROR, create_settings_error },
@@ -449,7 +450,7 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
     return ret_val;
 }
 
-static int shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int ret_val;
