@@ -206,10 +206,12 @@ void dc_network_opt_ip4_ret_opts(const struct dc_posix_env *env, struct dc_error
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RETOPTS, value);
 }
 
+/*
 void dc_network_opt_ip4_ipsec_policy(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_IPSEC_POLICY, value);
 }
+*/
 /*
 void dc_network_opt_ip4_strip_header(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
