@@ -4,13 +4,15 @@
 set(HEADER_LIST
         "${libdc_network_SOURCE_DIR}/include/dc_network/client.h"
         "${libdc_network_SOURCE_DIR}/include/dc_network/common.h"
+        "${libdc_network_SOURCE_DIR}/include/dc_network/options.h"
         "${libdc_network_SOURCE_DIR}/include/dc_network/server.h"
         )
 
 set(SOURCE_LIST
     client.c
 	common.c
-	server.c
+    options.c
+    server.c
         )
 
 # Make an static library

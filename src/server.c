@@ -16,7 +16,6 @@
 
 
 #include "server.h"
-#include "common.h"
 #include <dc_fsm/fsm.h>
 #include <dc_posix/stdlib.h>
 #include <dc_posix/string.h>
@@ -70,7 +69,8 @@ struct dc_server_lifecycle
     void (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
     void (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
     void (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, int *client_socket_fd, void *arg);
+    bool (*request_handler)(const struct dc_posix_env *env, struct dc_error *err, int client_socket_fd, void *arg);
     void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
     void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 };
@@ -244,7 +244,7 @@ int dc_server_run(const struct dc_posix_env *env,
             { LISTEN,                SETUP,                 setup                 },
             { SETUP,                 ACCEPT,                do_accept             },
             { ACCEPT,                ACCEPT,                do_accept             },
-            { ACCEPT,                SHUTDOWN,              do_shutdown              },
+            { ACCEPT,                SHUTDOWN,              do_shutdown           },
             { SHUTDOWN,              DESTROY_SETTINGS,      destroy_settings      },
             { DESTROY_SETTINGS,      DC_FSM_EXIT,           NULL                  },
             { CREATE_SETTINGS,       CREATE_SETTINGS_ERROR, create_settings_error },
@@ -427,17 +427,18 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
 {
     struct dc_server_info *info;
     int ret_val;
-    bool shutdown;
+    bool shutdown_flag;
+    int client_socket_fd;
 
     DC_TRACE(env);
-    info     = arg;
-    shutdown = info->lifecycle->accept(env, err, info->configuration);
+    info           = arg;
+    shutdown_flag = info->lifecycle->accept(env, err, info->configuration, &client_socket_fd);
 
     if(DC_HAS_NO_ERROR(err))
     {
         ret_val = ACCEPT;
     }
-    else if(shutdown)
+    else if(shutdown_flag)
     {
         ret_val = SHUTDOWN;
     }

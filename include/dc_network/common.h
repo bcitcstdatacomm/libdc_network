@@ -21,6 +21,7 @@
 
 #include <dc_posix/posix_env.h>
 
+
 /*
  * Copyright 2021-2021 D'Arcy Smith.
  *
@@ -63,15 +64,6 @@ void dc_network_get_addresses(const struct dc_posix_env *env, struct dc_error *e
  * @return
  */
 int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *err, struct addrinfo *addr);
-
-/**
- *
- * @param env
- * @param err
- * @param socket_fd
- * @param reuse_address
- */
-void dc_network_reuse_socket(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool reuse_address);
 
 /**
  *

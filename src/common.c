@@ -48,26 +48,6 @@ int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *er
     return socket_fd;
 }
 
-void dc_network_reuse_socket(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool reuse_address)
-{
-    static const int reuse_flag        = 1;
-    static const int do_not_reuse_flag = 0;
-    const int *flag;
-
-    DC_TRACE(env);
-
-    if(reuse_address)
-    {
-        flag = &reuse_flag;
-    }
-    else
-    {
-        flag = &do_not_reuse_flag;
-    }
-
-    dc_setsockopt(env, err, socket_fd, SOL_SOCKET, SO_REUSEADDR, flag, sizeof(int));
-}
-
 void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, struct sockaddr *sockaddr, uint16_t port)
 {
     socklen_t sockaddr_size;
