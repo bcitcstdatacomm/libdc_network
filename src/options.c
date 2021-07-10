@@ -206,12 +206,11 @@ void dc_network_opt_ip4_ret_opts(const struct dc_posix_env *env, struct dc_error
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RETOPTS, value);
 }
 
-/*
 void dc_network_opt_ip4_ipsec_policy(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_IPSEC_POLICY, value);
 }
-*/
+
 /*
 void dc_network_opt_ip4_strip_header(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -470,7 +469,7 @@ void car(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bo
 {
     set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_HOPLIMIT, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BINDV6ONLY, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_IPSEC_POLICY, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_IPSEC_POLICY, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ADD, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_DEL, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_FLUSH, value);
