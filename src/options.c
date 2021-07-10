@@ -38,7 +38,7 @@ static void set_bool_option(const struct dc_posix_env *env, struct dc_error *err
 
 void foo(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int value)
 {
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_REUSEPORT, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_REUSEPORT, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_TIMESTAMP, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_TYPE, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_ERROR, value);
