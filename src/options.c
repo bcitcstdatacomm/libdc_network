@@ -276,20 +276,24 @@ void dc_network_opt_ip4_multicast_unblock_source(const struct dc_posix_env *env,
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_UNBLOCK_SOURCE, value);
 }
 
+/*
 void dc_network_opt_tcp_keep_alive(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_TCP, TCP_KEEPALIVE, value);
 }
+*/
 
 void dc_network_opt_tcp_no_delay(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, TCP_NODELAY, value);
 }
 
+/*
 void dc_network_opt_use_loopback(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_USELOOPBACK, value);
 }
+*/
 
 void dc_network_opt_ip6_checksum(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
