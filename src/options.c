@@ -346,10 +346,12 @@ void dc_network_opt_ip6_packet_info(const struct dc_posix_env *env, struct dc_er
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_PKTINFO, value);
 }
 
+/*
 void dc_network_opt_ip6_prefer_temp_addr(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_PREFER_TEMPADDR, value);
 }
+*/
 
 void dc_network_opt_ip6_recv_dest_options(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -406,10 +408,12 @@ void dc_network_opt_ip6_unicast_hops(const struct dc_posix_env *env, struct dc_e
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_UNICAST_HOPS, value);
 }
 
+/*
 void dc_network_opt_ip6_use_min_mtu(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_USE_MIN_MTU, value);
 }
+*/
 
 void dc_network_opt_ip6_v6_only(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -454,14 +458,14 @@ void dc_network_opt_icmp6_filter(const struct dc_posix_env *env, struct dc_error
 void car(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_HOPLIMIT, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BINDV6ONLY, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BINDV6ONLY, value);
     set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_IPSEC_POLICY, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ADD, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_DEL, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_FLUSH, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ZERO, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_GET, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BOUND_IF, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ADD, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_DEL, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_FLUSH, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ZERO, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_GET, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BOUND_IF, value);
 }
 
 
