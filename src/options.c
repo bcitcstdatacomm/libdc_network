@@ -20,7 +20,8 @@
 #include <netinet/tcp.h>
 #define __APPLE_USE_RFC_3542
 #include <netinet/in.h>
-
+#include <netinet/ip6.h>
+#include <netinet/icmp6.h>
 
 // List of options. TODO: need to verify this is complete
 // https://www.ibm.com/docs/en/i/7.4?topic=ssw_ibm_i_74/apis/ssocko.htm
