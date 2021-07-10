@@ -210,31 +210,30 @@ void dc_network_opt_ip4_ipsec_policy(const struct dc_posix_env *env, struct dc_e
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_IPSEC_POLICY, value);
 }
-
+/*
 void dc_network_opt_ip4_strip_header(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_STRIPHDR, value);
 }
-
-
+*/
 void bar(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTTL, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BOUND_IF, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BOUND_IF, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_PKTINFO, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTOS, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ADD, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_DEL, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_FLUSH, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ZERO, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_GET, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_RESETLOG, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_CONFIGURE, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_DEL, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_FLUSH, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_GET, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TRAFFIC_MGT_BACKGROUND, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IFINDEX, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ADD, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_DEL, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_FLUSH, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ZERO, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_GET, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_RESETLOG, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_CONFIGURE, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_DEL, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_FLUSH, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_GET, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TRAFFIC_MGT_BACKGROUND, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IFINDEX, value);
 }
 
 void dc_network_opt_ip4_tos(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
