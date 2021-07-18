@@ -20,6 +20,7 @@
 
 
 #include <dc_posix/posix_env.h>
+#include <stdint.h>
 
 
 /*
