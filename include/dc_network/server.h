@@ -118,7 +118,7 @@ void dc_server_lifecycle_set_setup(const struct dc_posix_env *env, struct dc_ser
  * @param lifecycle
  * @param accept
  */
-void dc_server_lifecycle_set_accept(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
+void dc_server_lifecycle_set_accept(const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle, bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, int *client_socket_fd, void *arg));
 
 /**
  *

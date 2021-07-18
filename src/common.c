@@ -16,8 +16,8 @@
 
 
 #include "common.h"
-#include <dc_posix/string.h>
 #include <dc_posix/netdb.h>
+#include <dc_posix/string.h>
 #include <dc_posix/sys/socket.h>
 
 
@@ -65,7 +65,7 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
         addr_in->sin_port = htons(port);
         sockaddr_size = sizeof(struct sockaddr_in);
     }
-    else if(sockaddr->sa_family == AF_INET)
+    else if(sockaddr->sa_family == AF_INET6)
     {
         struct sockaddr_in6 *addr_in;
 
