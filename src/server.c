@@ -265,7 +265,7 @@ int dc_server_run(const struct dc_posix_env *env,
             { DC_FSM_IGNORE,         DC_FSM_IGNORE,         NULL                  },
         };
 
-        fsm_info = dc_fsm_info_create(env, err, info->name, info->verbose_file);
+        fsm_info = dc_fsm_info_create(env, err, info->name);
 
         if(DC_HAS_NO_ERROR(err))
         {
