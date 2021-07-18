@@ -19,6 +19,7 @@
 #include <dc_posix/netdb.h>
 #include <dc_posix/string.h>
 #include <dc_posix/sys/socket.h>
+#include <netinet/in.h>
 
 
 void dc_network_get_addresses(const struct dc_posix_env *env, struct dc_error *err, int family, int sock_type, const char *hostname, struct addrinfo **result)
