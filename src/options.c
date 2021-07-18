@@ -222,7 +222,7 @@ void bar(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bo
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTTL, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BOUND_IF, value);
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_PKTINFO, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_PKTINFO, value);
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTOS, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ADD, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_DEL, value);
