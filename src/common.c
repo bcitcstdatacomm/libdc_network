@@ -30,7 +30,7 @@ void dc_network_get_addresses(const struct dc_posix_env *env, struct dc_error *e
     dc_memset(env, &hints, 0, sizeof(hints));
     hints.ai_family    = family;
     hints.ai_socktype  = sock_type;
-    hints.ai_flags    |= AI_CANONNAME;
+    hints.ai_flags     = AI_CANONNAME;
     dc_getaddrinfo(env, err, hostname, NULL, &hints, result);
 }
 
@@ -55,6 +55,8 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
     in_port_t converted_port;
 
     DC_TRACE(env);
+
+    // NOLINTNEXTLINE(hicpp-signed-bitwise)
     converted_port = htons(port);
 
     if(sockaddr->sa_family == AF_INET)
