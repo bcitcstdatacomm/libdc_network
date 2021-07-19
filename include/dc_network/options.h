@@ -92,7 +92,6 @@ void dc_network_opt_ip6multicast_join_source_group(const struct dc_posix_env *en
 void dc_network_opt_ip6_multicast_leave__group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_multicast_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_icmp6_filter(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 
 

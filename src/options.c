@@ -476,10 +476,12 @@ void dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env,
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_UNBLOCK_SOURCE, value);
 }
 
+/*
 void dc_network_opt_icmp6_filter(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, ICMP6_FILTER, value);
 }
+*/
 
 void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
