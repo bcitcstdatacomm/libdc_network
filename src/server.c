@@ -17,8 +17,8 @@
 
 #include "server.h"
 #include <dc_fsm/fsm.h>
-#include <dc_posix/stdlib.h>
-#include <dc_posix/string.h>
+#include <dc_posix/dc_stdlib.h>
+#include <dc_posix/dc_string.h>
 
 
 static int create_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg);
@@ -61,6 +61,9 @@ enum application_states
     SHUTDOWN_ERROR,                      // 18
 };
 
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpadded"
 struct dc_server_lifecycle
 {
     void (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
@@ -74,6 +77,7 @@ struct dc_server_lifecycle
     void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
     void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 } __attribute__((aligned(128)));
+#pragma GCC diagnostic pop
 
 
 struct dc_server_info
@@ -93,7 +97,7 @@ struct dc_server_lifecycle *dc_server_lifecycle_create(const struct dc_posix_env
     DC_TRACE(env);
     lifecycle = dc_calloc(env, err, 1, sizeof(struct dc_server_lifecycle));
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
     }
 
@@ -174,11 +178,11 @@ struct dc_server_info *dc_server_info_create(const struct dc_posix_env *env,
     DC_TRACE(env);
     info = dc_calloc(env, err, 1, sizeof(struct dc_server_info));
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         info->name = dc_malloc(env, err, dc_strlen(env, name) + 1);
 
-        if(DC_HAS_NO_ERROR(err))
+        if(dc_error_has_no_error(err))
         {
             dc_strcpy(env, info->name, name);
             info->verbose_file  = verbose_file;
@@ -230,7 +234,7 @@ int dc_server_run(const struct dc_posix_env *env,
     DC_TRACE(env);
     info->lifecycle = create_lifecycle_func(env, err);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         struct dc_fsm_info *fsm_info;
         static struct dc_fsm_transition transitions[] =
@@ -267,7 +271,7 @@ int dc_server_run(const struct dc_posix_env *env,
 
         fsm_info = dc_fsm_info_create(env, err, info->name);
 
-        if(DC_HAS_NO_ERROR(err))
+        if(dc_error_has_no_error(err))
         {
             dc_fsm_run(env, err, fsm_info, NULL, NULL, info, transitions);
             dc_fsm_info_destroy(env, &fsm_info);
@@ -276,7 +280,7 @@ int dc_server_run(const struct dc_posix_env *env,
         destroy_lifecycle_func(env, &info->lifecycle);
     }
 
-    if(DC_HAS_ERROR(err))
+    if(dc_error_has_error(err))
     {
         ret_val = -1;
     }
@@ -297,7 +301,7 @@ static int create_settings(const struct dc_posix_env *env, struct dc_error *err,
     info    = arg;
     info->lifecycle->create_settings(env, err, info->configuration);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = CREATE_SOCKET;
     }
@@ -318,7 +322,7 @@ static int create_socket(const struct dc_posix_env *env, struct dc_error *err, v
     info    = arg;
     info->lifecycle->create_socket(env, err, info->configuration);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = SET_SOCKOPTS;
     }
@@ -343,7 +347,7 @@ static int set_sockopts(const struct dc_posix_env *env, struct dc_error *err, vo
         info->lifecycle->set_sockopts(env, err, info->configuration);
     }
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = BIND;
     }
@@ -364,7 +368,7 @@ static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *a
     info = arg;
     info->lifecycle->bind(env, err, info->configuration);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = LISTEN;
     }
@@ -385,7 +389,7 @@ static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void 
     info = arg;
     info->lifecycle->listen(env, err, info->configuration);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = SETUP;
     }
@@ -410,7 +414,7 @@ static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg
         info->lifecycle->setup(env, err, info->configuration);
     }
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = ACCEPT;
     }
@@ -433,7 +437,7 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
     info           = arg;
     shutdown_flag = info->lifecycle->accept(env, err, info->configuration, &client_socket_fd);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = ACCEPT;
     }
@@ -458,7 +462,7 @@ static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, voi
     info = arg;
     info->lifecycle->shutdown(env, err, info->configuration);
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         ret_val = DESTROY_SETTINGS;
     }

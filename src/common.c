@@ -16,9 +16,9 @@
 
 
 #include "common.h"
-#include <dc_posix/netdb.h>
-#include <dc_posix/string.h>
-#include <dc_posix/sys/socket.h>
+#include <dc_posix/dc_netdb.h>
+#include <dc_posix/dc_string.h>
+#include <dc_posix/sys/dc_socket.h>
 #include <netinet/in.h>
 
 
@@ -52,8 +52,10 @@ int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *er
 void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, struct sockaddr *sockaddr, uint16_t port)
 {
     socklen_t sockaddr_size;
+    in_port_t converted_port;
 
     DC_TRACE(env);
+    converted_port = htons(port);
 
     if(sockaddr->sa_family == AF_INET)
     {
@@ -63,7 +65,7 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
 #pragma GCC diagnostic ignored "-Wcast-align"
         addr_in = (struct sockaddr_in *)sockaddr;
 #pragma GCC diagnostic pop
-        addr_in->sin_port = htons(port);
+        addr_in->sin_port = converted_port;
         sockaddr_size = sizeof(struct sockaddr_in);
     }
     else if(sockaddr->sa_family == AF_INET6)
@@ -74,15 +76,16 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
 #pragma GCC diagnostic ignored "-Wcast-align"
         addr_in = (struct sockaddr_in6 *)sockaddr;
 #pragma GCC diagnostic pop
-        addr_in->sin6_port = htons(port);
+        addr_in->sin6_port = converted_port;
         sockaddr_size = sizeof(struct sockaddr_in6);
     }
     else
     {
-        DC_REPORT_USER(env, err, "sockaddr->sa_family is wrong", -1);
+        DC_ERROR_RAISE_USER(err, "sockaddr->sa_family is wrong", -1);
+        sockaddr_size = 0;
     }
 
-    if(DC_HAS_NO_ERROR(err))
+    if(dc_error_has_no_error(err))
     {
         dc_bind(env,
                 err,

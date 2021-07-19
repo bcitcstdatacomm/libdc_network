@@ -19,7 +19,7 @@
  */
 
 
-#include <dc_posix/posix_env.h>
+#include <dc_posix/dc_posix_env.h>
 #include <stdint.h>
 
 
@@ -41,9 +41,9 @@
 
 
 #include "common.h"
-#include <dc_posix/string.h>
-#include <dc_posix/netdb.h>
-#include <dc_posix/sys/socket.h>
+#include <dc_posix/dc_string.h>
+#include <dc_posix/dc_netdb.h>
+#include <dc_posix/sys/dc_socket.h>
 
 
 /**
