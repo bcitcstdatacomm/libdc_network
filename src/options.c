@@ -33,12 +33,12 @@ static void set_bool_option(const struct dc_posix_env *env, struct dc_error *err
     dc_setsockopt(env, err, socket_fd, level, option, &flag, sizeof(flag));
 }
 
+/*
 void dc_network_opt_ip_so_timestamp(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_TIMESTAMP, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_REUSEPORT, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_NOSIGPIPE, value);
 }
+*/
 
 void dc_network_opt_ip_so_type(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -238,21 +238,6 @@ void dc_network_opt_ip4_recv_tos(const struct dc_posix_env *env, struct dc_error
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTOS, value);
 }
 
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BOUND_IF, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_PKTINFO, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ADD, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_DEL, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_FLUSH, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ZERO, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_GET, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_RESETLOG, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_CONFIGURE, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_DEL, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_FLUSH, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_GET, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TRAFFIC_MGT_BACKGROUND, value);
-//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IFINDEX, value);
-
 void dc_network_opt_ip4_tos(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TOS, value);
@@ -268,35 +253,47 @@ void dc_network_opt_ip4_unblock_source(const struct dc_posix_env *env, struct dc
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_UNBLOCK_SOURCE, value);
 }
 
+/*
 void dc_network_opt_ip4_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_BLOCK_SOURCE, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_JOIN_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_JOIN_SOURCE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_multicast_leave_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_LEAVE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_LEAVE_SOURCE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, MCAST_UNBLOCK_SOURCE, value);
 }
+*/
 
 /*
 void dc_network_opt_tcp_keep_alive(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
@@ -446,35 +443,47 @@ void dc_network_opt_ip6_v6_only(const struct dc_posix_env *env, struct dc_error 
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_V6ONLY, value);
 }
 
+/*
 void dc_network_opt_ip6_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_BLOCK_SOURCE, value);
 }
+*/
 
+/*
 void dc_network_opt_ip6_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_JOIN_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip6multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_JOIN_SOURCE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip6_multicast_leave__group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_LEAVE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip6_multicast_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_LEAVE_SOURCE_GROUP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, MCAST_UNBLOCK_SOURCE, value);
 }
+*/
 
 /*
 void dc_network_opt_icmp6_filter(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
@@ -494,6 +503,22 @@ void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_er
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_ZERO, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_FW_GET, value);
 //    set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_BOUND_IF, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_REUSEPORT, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_NOSIGPIPE, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BOUND_IF, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_PKTINFO, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ADD, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_DEL, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_FLUSH, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_ZERO, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_GET, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_FW_RESETLOG, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_CONFIGURE, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_DEL, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_FLUSH, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DUMMYNET_GET, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TRAFFIC_MGT_BACKGROUND, value);
+//    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IFINDEX, value);
 }
 
 

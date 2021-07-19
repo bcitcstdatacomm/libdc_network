@@ -22,7 +22,7 @@
 #include <dc_posix/dc_posix_env.h>
 
 
-void dc_network_opt_ip_so_timestamp(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int value);
+// void dc_network_opt_ip_so_timestamp(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int value);
 void dc_network_opt_ip_so_type(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip_so_error(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip_so_broadcast(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
@@ -56,12 +56,12 @@ void dc_network_opt_ip4_recv_tos(const struct dc_posix_env *env, struct dc_error
 void dc_network_opt_ip4_tos(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip4_ttl(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip4_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_multicast_leave_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip4_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_multicast_leave_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip4_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_tcp_no_delay(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_checksum(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_do_not_fragment(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
@@ -86,12 +86,12 @@ void dc_network_opt_ip6_route_header_options(const struct dc_posix_env *env, str
 void dc_network_opt_ip6_traffic_class(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_unicast_hops(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_ip6_v6_only(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6_multicast_leave__group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6_multicast_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
-void dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6_multicast_join_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6multicast_join_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6_multicast_leave_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6_multicast_leave_source_group(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
+// void dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value);
 
 
