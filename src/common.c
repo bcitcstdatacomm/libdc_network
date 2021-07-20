@@ -14,23 +14,26 @@
  * limitations under the License.
  */
 
-
 #include "common.h"
 #include <dc_posix/dc_netdb.h>
 #include <dc_posix/dc_string.h>
 #include <dc_posix/sys/dc_socket.h>
 #include <netinet/in.h>
 
-
-void dc_network_get_addresses(const struct dc_posix_env *env, struct dc_error *err, int family, int sock_type, const char *hostname, struct addrinfo **result)
+void dc_network_get_addresses(const struct dc_posix_env *env,
+                              struct dc_error *          err,
+                              int                        family,
+                              int                        sock_type,
+                              const char *               hostname,
+                              struct addrinfo **         result)
 {
     struct addrinfo hints;
 
     DC_TRACE(env);
     dc_memset(env, &hints, 0, sizeof(hints));
-    hints.ai_family    = family;
-    hints.ai_socktype  = sock_type;
-    hints.ai_flags     = AI_CANONNAME;
+    hints.ai_family   = family;
+    hints.ai_socktype = sock_type;
+    hints.ai_flags    = AI_CANONNAME;
     dc_getaddrinfo(env, err, hostname, NULL, &hints, result);
 }
 
@@ -40,16 +43,16 @@ int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *er
 
     DC_TRACE(env);
 
-    socket_fd = dc_socket(env,
-                          err,
-                          addr->ai_family,
-                          addr->ai_socktype,
-                          addr->ai_protocol);
+    socket_fd = dc_socket(env, err, addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 
     return socket_fd;
 }
 
-void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, struct sockaddr *sockaddr, uint16_t port)
+void dc_network_bind(const struct dc_posix_env *env,
+                     struct dc_error *          err,
+                     int                        socket_fd,
+                     struct sockaddr *          sockaddr,
+                     uint16_t                   port)
 {
     socklen_t sockaddr_size;
     in_port_t converted_port;
@@ -68,7 +71,7 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
         addr_in = (struct sockaddr_in *)sockaddr;
 #pragma GCC diagnostic pop
         addr_in->sin_port = converted_port;
-        sockaddr_size = sizeof(struct sockaddr_in);
+        sockaddr_size     = sizeof(struct sockaddr_in);
     }
     else if(sockaddr->sa_family == AF_INET6)
     {
@@ -79,7 +82,7 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
         addr_in = (struct sockaddr_in6 *)sockaddr;
 #pragma GCC diagnostic pop
         addr_in->sin6_port = converted_port;
-        sockaddr_size = sizeof(struct sockaddr_in6);
+        sockaddr_size      = sizeof(struct sockaddr_in6);
     }
     else
     {
@@ -89,21 +92,14 @@ void dc_network_bind(const struct dc_posix_env *env, struct dc_error *err, int s
 
     if(dc_error_has_no_error(err))
     {
-        dc_bind(env,
-                err,
-                socket_fd,
-                sockaddr,
-                sockaddr_size);
+        dc_bind(env, err, socket_fd, sockaddr, sockaddr_size);
     }
 }
 
 void dc_network_listen(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int backlog)
 {
     DC_TRACE(env);
-    dc_listen(env,
-              err,
-              socket_fd,
-              backlog);
+    dc_listen(env, err, socket_fd, backlog);
 }
 
 int dc_network_accept(const struct dc_posix_env *env, struct dc_error *err, int server_socket_fd)

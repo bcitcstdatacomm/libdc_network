@@ -1,7 +1,6 @@
 #ifndef LIBDC_NETWORK_CLIENT_H
 #define LIBDC_NETWORK_CLIENT_H
 
-
 /*
  * Copyright 2021-2021 D'Arcy Smith.
  *
@@ -18,8 +17,6 @@
  * limitations under the License.
  */
 
-
 #include <dc_posix/dc_posix_env.h>
-
 
 #endif // LIBDC_NETWORK_CLIENT_H

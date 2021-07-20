@@ -9,6 +9,20 @@ project(libdc_network
         DESCRIPTION ""
         LANGUAGES C)
 
+set(HEADER_LIST
+        "${libdc_network_SOURCE_DIR}/include/dc_network/client.h"
+        "${libdc_network_SOURCE_DIR}/include/dc_network/common.h"
+        "${libdc_network_SOURCE_DIR}/include/dc_network/options.h"
+        "${libdc_network_SOURCE_DIR}/include/dc_network/server.h"
+        )
+
+set(SOURCE_LIST
+        "${libdc_network_SOURCE_DIR}/src/client.c"
+        "${libdc_network_SOURCE_DIR}/src/common.c"
+        "${libdc_network_SOURCE_DIR}/src/options.c"
+        "${libdc_network_SOURCE_DIR}/src/server.c"
+        )
+
 ### Require out-of-source builds
 # this still creates a CMakeFiles directory and CMakeCache.txt- can we delete them?
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
