@@ -85,9 +85,9 @@ void dc_network_opt_ip_so_recv_buf(const struct dc_posix_env *env, struct dc_err
 }
 
 void dc_network_opt_ip_so_recv_low_water(const struct dc_posix_env *env,
-                                         struct dc_error *          err,
-                                         int                        socket_fd,
-                                         bool                       value)
+                                         struct dc_error *err,
+                                         int socket_fd,
+                                         bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_RCVLOWAT, value);
 }
@@ -108,9 +108,9 @@ void dc_network_opt_ip_so_send_buf(const struct dc_posix_env *env, struct dc_err
 }
 
 void dc_network_opt_ip_so_send_low_water(const struct dc_posix_env *env,
-                                         struct dc_error *          err,
-                                         int                        socket_fd,
-                                         bool                       value)
+                                         struct dc_error *err,
+                                         int socket_fd,
+                                         bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_SNDLOWAT, value);
 }
@@ -126,9 +126,9 @@ void dc_network_opt_ip4_add_membership(const struct dc_posix_env *env, struct dc
 }
 
 void dc_network_opt_ip4_add_source_membership(const struct dc_posix_env *env,
-                                              struct dc_error *          err,
-                                              int                        socket_fd,
-                                              bool                       value)
+                                              struct dc_error *err,
+                                              int socket_fd,
+                                              bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_ADD_SOURCE_MEMBERSHIP, value);
 }
@@ -156,17 +156,17 @@ void dc_network_opt_ip4_header_include(const struct dc_posix_env *env, struct dc
 }
 
 void dc_network_opt_ip4_drop_source_membership(const struct dc_posix_env *env,
-                                               struct dc_error *          err,
-                                               int                        socket_fd,
-                                               bool                       value)
+                                               struct dc_error *err,
+                                               int socket_fd,
+                                               bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DROP_SOURCE_MEMBERSHIP, value);
 }
 
 void dc_network_opt_ip4_multicast_interface(const struct dc_posix_env *env,
-                                            struct dc_error *          err,
-                                            int                        socket_fd,
-                                            bool                       value)
+                                            struct dc_error *err,
+                                            int socket_fd,
+                                            bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IF, value);
 }
@@ -364,9 +364,9 @@ void dc_network_opt_ip6_multicast_hops(const struct dc_posix_env *env, struct dc
 }
 
 void dc_network_opt_ip6_multicast_interface(const struct dc_posix_env *env,
-                                            struct dc_error *          err,
-                                            int                        socket_fd,
-                                            bool                       value)
+                                            struct dc_error *err,
+                                            int socket_fd,
+                                            bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_MULTICAST_IF, value);
 }
@@ -394,9 +394,9 @@ void dc_network_opt_ip6_prefer_temp_addr(const struct dc_posix_env *env, struct 
 */
 
 void dc_network_opt_ip6_recv_dest_options(const struct dc_posix_env *env,
-                                          struct dc_error *          err,
-                                          int                        socket_fd,
-                                          bool                       value)
+                                          struct dc_error *err,
+                                          int socket_fd,
+                                          bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_RECVDSTOPTS, value);
 }
@@ -407,9 +407,9 @@ void dc_network_opt_ip6_recv_hop_limit(const struct dc_posix_env *env, struct dc
 }
 
 void dc_network_opt_ip6_recv_hop_options(const struct dc_posix_env *env,
-                                         struct dc_error *          err,
-                                         int                        socket_fd,
-                                         bool                       value)
+                                         struct dc_error *err,
+                                         int socket_fd,
+                                         bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_RECVHOPOPTS, value);
 }
@@ -420,25 +420,25 @@ void dc_network_opt_ip6_recv_path_mtu(const struct dc_posix_env *env, struct dc_
 }
 
 void dc_network_opt_ip6_recv_packet_info(const struct dc_posix_env *env,
-                                         struct dc_error *          err,
-                                         int                        socket_fd,
-                                         bool                       value)
+                                         struct dc_error *err,
+                                         int socket_fd,
+                                         bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_RECVPKTINFO, value);
 }
 
 void dc_network_opt_ip6_recv_route_heder(const struct dc_posix_env *env,
-                                         struct dc_error *          err,
-                                         int                        socket_fd,
-                                         bool                       value)
+                                         struct dc_error *err,
+                                         int socket_fd,
+                                         bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_RECVRTHDR, value);
 }
 
 void dc_network_opt_ip6_recv_traffic_class(const struct dc_posix_env *env,
-                                           struct dc_error *          err,
-                                           int                        socket_fd,
-                                           bool                       value)
+                                           struct dc_error *err,
+                                           int socket_fd,
+                                           bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IPV6, IPV6_RECVTCLASS, value);
 }
@@ -449,9 +449,9 @@ void dc_network_opt_ip6_route_header(const struct dc_posix_env *env, struct dc_e
 }
 
 void dc_network_opt_ip6_route_header_options(const struct dc_posix_env *env,
-                                             struct dc_error *          err,
-                                             int                        socket_fd,
-                                             bool                       value)
+                                             struct dc_error *err,
+                                             int socket_fd,
+                                             bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IPV6_RTHDRDSTOPTS, value);
 }
