@@ -58,8 +58,6 @@ enum application_states
     SHUTDOWN_ERROR,                         // 18
 };
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpadded"
 struct dc_server_lifecycle
 {
     void (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
@@ -72,8 +70,7 @@ struct dc_server_lifecycle
     bool (*request_handler)(const struct dc_posix_env *env, struct dc_error *err, int client_socket_fd, void *arg);
     void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
     void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-} __attribute__((aligned(128)));
-#pragma GCC diagnostic pop
+};
 
 struct dc_server_info
 {
@@ -81,7 +78,7 @@ struct dc_server_info
     FILE *                      verbose_file;
     struct dc_server_lifecycle *lifecycle;
     void *                      configuration;
-} __attribute__((aligned(32)));
+};
 
 struct dc_server_lifecycle *dc_server_lifecycle_create(const struct dc_posix_env *env, struct dc_error *err)
 {

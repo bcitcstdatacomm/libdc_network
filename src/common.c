@@ -66,10 +66,7 @@ void dc_network_bind(const struct dc_posix_env *env,
     {
         struct sockaddr_in *addr_in;
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wcast-align"
         addr_in = (struct sockaddr_in *)sockaddr;
-#pragma GCC diagnostic pop
         addr_in->sin_port = converted_port;
         sockaddr_size     = sizeof(struct sockaddr_in);
     }
@@ -77,10 +74,7 @@ void dc_network_bind(const struct dc_posix_env *env,
     {
         struct sockaddr_in6 *addr_in;
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wcast-align"
         addr_in = (struct sockaddr_in6 *)sockaddr;
-#pragma GCC diagnostic pop
         addr_in->sin6_port = converted_port;
         sockaddr_size      = sizeof(struct sockaddr_in6);
     }
