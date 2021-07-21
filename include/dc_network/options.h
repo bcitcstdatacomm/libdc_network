@@ -80,76 +80,96 @@ void dc_network_opt_ip_so_send_timeout(const struct dc_posix_env *env,
                                        struct dc_error *err, int socket_fd,
                                        bool value);
 
+/*
 void dc_network_opt_ip4_add_membership(const struct dc_posix_env *env,
                                        struct dc_error *err, int socket_fd,
                                        bool value);
+*/
 
+/*
 void dc_network_opt_ip4_add_source_membership(const struct dc_posix_env *env,
                                               struct dc_error *err,
                                               int socket_fd, bool value);
+*/
 
+/*
 void dc_network_opt_ip4_block_source(const struct dc_posix_env *env,
                                      struct dc_error *err, int socket_fd,
                                      bool value);
-
+*/
+/*
 void dc_network_opt_ip4_drop_membership(const struct dc_posix_env *env,
                                         struct dc_error *err, int socket_fd,
                                         bool value);
-
+*/
+/*
 void dc_network_opt_ip4_header_include(const struct dc_posix_env *env,
                                        struct dc_error *err, int socket_fd,
                                        bool value);
-
+*/
+/*
 void dc_network_opt_ip4_drop_source_membership(const struct dc_posix_env *env,
                                                struct dc_error *err,
                                                int socket_fd, bool value);
-
+*/
+/*
 void dc_network_opt_ip4_multicast_interface(const struct dc_posix_env *env,
                                             struct dc_error *err, int socket_fd,
                                             bool value);
-
+*/
+/*
 void dc_network_opt_ip4_multicast_loop(const struct dc_posix_env *env,
                                        struct dc_error *err, int socket_fd,
                                        bool value);
-
+*/
+/*
 void dc_network_opt_ip4_multicast_ttl(const struct dc_posix_env *env,
                                       struct dc_error *err, int socket_fd,
                                       bool value);
-
+*/
+/*
 void dc_network_opt_ip4_options(const struct dc_posix_env *env,
                                 struct dc_error *err, int socket_fd,
                                 bool value);
-
+*/
+/*
 void dc_network_opt_ip4_recv_opts(const struct dc_posix_env *env,
                                   struct dc_error *err, int socket_fd,
                                   bool value);
-
+*/
+/*
 void dc_network_opt_ip4_recv_ret_opts(const struct dc_posix_env *env,
                                       struct dc_error *err, int socket_fd,
                                       bool value);
-
+*/
+/*
 void dc_network_opt_ip4_ret_opts(const struct dc_posix_env *env,
                                  struct dc_error *err, int socket_fd,
                                  bool value);
-
+*/
+/*
 void dc_network_opt_ip4_recv_ttl(const struct dc_posix_env *env,
                                  struct dc_error *err, int socket_fd,
                                  bool value);
-
+*/
+/*
 void dc_network_opt_ip4_recv_tos(const struct dc_posix_env *env,
                                  struct dc_error *err, int socket_fd,
                                  bool value);
-
+*/
+/*
 void dc_network_opt_ip4_tos(const struct dc_posix_env *env,
                             struct dc_error *err, int socket_fd, bool value);
-
+*/
+/*
 void dc_network_opt_ip4_ttl(const struct dc_posix_env *env,
                             struct dc_error *err, int socket_fd, bool value);
-
+*/
+/*
 void dc_network_opt_ip4_unblock_source(const struct dc_posix_env *env,
                                        struct dc_error *err, int socket_fd,
                                        bool value);
-
+*/
 // void dc_network_opt_ip4_multicast_block_source(const struct dc_posix_env
 // *env, struct dc_error *err, int socket_fd, bool value); void
 // dc_network_opt_ip4_multicast_join_group(const struct dc_posix_env *env,

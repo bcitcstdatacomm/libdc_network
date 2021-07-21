@@ -120,11 +120,14 @@ void dc_network_opt_ip_so_send_timeout(const struct dc_posix_env *env, struct dc
     set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_SNDTIMEO, value);
 }
 
+/*
 void dc_network_opt_ip4_add_membership(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, value);
 }
+*/
 
+/*
 void dc_network_opt_ip4_add_source_membership(const struct dc_posix_env *env,
                                               struct dc_error *err,
                                               int socket_fd,
@@ -132,12 +135,13 @@ void dc_network_opt_ip4_add_source_membership(const struct dc_posix_env *env,
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_ADD_SOURCE_MEMBERSHIP, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_BLOCK_SOURCE, value);
 }
-
+*/
 /*
 void dc_network_opt_ip4_do_not_fragment(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -145,16 +149,19 @@ void dc_network_opt_ip4_do_not_fragment(const struct dc_posix_env *env, struct d
 }
 */
 
+/*
 void dc_network_opt_ip4_drop_membership(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DROP_MEMBERSHIP, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_header_include(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_HDRINCL, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_drop_source_membership(const struct dc_posix_env *env,
                                                struct dc_error *err,
                                                int socket_fd,
@@ -162,7 +169,8 @@ void dc_network_opt_ip4_drop_source_membership(const struct dc_posix_env *env,
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_DROP_SOURCE_MEMBERSHIP, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_multicast_interface(const struct dc_posix_env *env,
                                             struct dc_error *err,
                                             int socket_fd,
@@ -170,22 +178,25 @@ void dc_network_opt_ip4_multicast_interface(const struct dc_posix_env *env,
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IF, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_multicast_loop(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_LOOP, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_multicast_ttl(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_TTL, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_options(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_OPTIONS, value);
 }
-
+*/
 /*
 void dc_network_opt_ip4_port_range(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -199,17 +210,18 @@ void dc_network_opt_ip4_recv_interface(const struct dc_posix_env *env, struct dc
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVIF, value);
 }
 */
-
+/*
 void dc_network_opt_ip4_recv_opts(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVOPTS, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_recv_ret_opts(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVRETOPTS, value);
 }
-
+*/
 /*
 void dc_network_opt_ip4_recv_dest_addr(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -223,12 +235,12 @@ void dc_network_opt_ip4_recv_packet_info(const struct dc_posix_env *env, struct 
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVPKTINFO, value);
 }
 */
-
+/*
 void dc_network_opt_ip4_ret_opts(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RETOPTS, value);
 }
-
+*/
 /*
 void dc_network_opt_ip4_ipsec_policy(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
@@ -241,32 +253,36 @@ void dc_network_opt_ip4_strip_header(const struct dc_posix_env *env, struct dc_e
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_STRIPHDR, value);
 }
 */
-
+/*
 void dc_network_opt_ip4_recv_ttl(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTTL, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_recv_tos(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_RECVTOS, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_tos(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TOS, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_ttl(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TTL, value);
 }
-
+*/
+/*
 void dc_network_opt_ip4_unblock_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_UNBLOCK_SOURCE, value);
 }
-
+*/
 /*
 void dc_network_opt_ip4_multicast_block_source(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
