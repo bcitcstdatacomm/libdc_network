@@ -290,8 +290,10 @@ void dc_network_opt_ip6_v6_only(const struct dc_posix_env *env,
 // *env, struct dc_error *err, int socket_fd, bool value); void
 // dc_network_opt_ip6_multicast_unblock_source(const struct dc_posix_env *env,
 // struct dc_error *err, int socket_fd, bool value);
+/*
 void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env,
                                     struct dc_error *err, int socket_fd,
                                     bool value);
+*/
 
 #endif // LIBDC_NETWORK_OPTIONS_H

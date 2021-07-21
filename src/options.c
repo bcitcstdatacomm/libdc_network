@@ -543,6 +543,7 @@ void dc_network_opt_icmp6_filter(const struct dc_posix_env *env, struct dc_error
 }
 */
 
+/*
 void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
     set_bool_option(env, err, socket_fd, IPPROTO_ICMPV6, IPV6_HOPLIMIT, value);
@@ -571,3 +572,4 @@ void dc_network_opt_icmp6_hop_limit(const struct dc_posix_env *env, struct dc_er
     //    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_TRAFFIC_MGT_BACKGROUND, value);
     //    set_bool_option(env, err, socket_fd, IPPROTO_IP, IP_MULTICAST_IFINDEX, value);
 }
+*/

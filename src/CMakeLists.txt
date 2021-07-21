@@ -4,7 +4,7 @@
 add_compile_definitions(_POSIX_C_SOURCE=200809L _XOPEN_SOURCE=700)
 
 if(APPLE)
-    add_definitions(-D_DARWIN_C_SOURCE)
+    add_compile_definitions(_DARWIN_C_SOURCE __APPLE_USE_RFC_3542)
 endif()
 
 find_program(LINT "clang-tidy")
