@@ -474,7 +474,7 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
 
     DC_TRACE(env);
     info = arg;
-    shutdown_flag = info->lifecycle->accept(env, err, info->configuration, &client_socket_fd);
+    shutdown_flag = info->lifecycle->accept(env, err, &client_socket_fd, info->configuration);
 
     if(dc_error_has_no_error(err))
     {
