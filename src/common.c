@@ -70,21 +70,18 @@ void dc_network_bind(const struct dc_posix_env *env,
         addr_in->sin_port = converted_port;
         sockaddr_size = sizeof(struct sockaddr_in);
     }
+    else if(sockaddr->sa_family == AF_INET6)
+    {
+        struct sockaddr_in6 *addr_in;
+
+        addr_in = (struct sockaddr_in6 *)sockaddr;
+        addr_in->sin6_port = converted_port;
+        sockaddr_size = sizeof(struct sockaddr_in6);
+    }
     else
     {
-        if(sockaddr->sa_family == AF_INET6)
-        {
-            struct sockaddr_in6 *addr_in;
-
-            addr_in = (struct sockaddr_in6 *)sockaddr;
-            addr_in->sin6_port = converted_port;
-            sockaddr_size = sizeof(struct sockaddr_in6);
-        }
-        else
-        {
-            DC_ERROR_RAISE_USER(err, "sockaddr->sa_family is wrong", -1);
-            sockaddr_size = 0;
-        }
+        DC_ERROR_RAISE_USER(err, "sockaddr->sa_family is wrong", -1);
+        sockaddr_size = 0;
     }
 
     if(dc_error_has_no_error(err))
