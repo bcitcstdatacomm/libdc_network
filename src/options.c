@@ -99,7 +99,7 @@ void dc_network_opt_ip_so_recv_timeout(const struct dc_posix_env *env, struct dc
 
 void dc_network_opt_ip_so_reuse_addr(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
 {
-    set_bool_option(env, err, socket_fd, IPPROTO_IP, SO_REUSEADDR, value);
+    set_bool_option(env, err, socket_fd, SOL_SOCKET, SO_REUSEADDR, value);
 }
 
 void dc_network_opt_ip_so_send_buf(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, bool value)
