@@ -476,15 +476,15 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
     info = arg;
     shutdown_flag = info->lifecycle->accept(env, err, &client_socket_fd, info->configuration);
 
-    if(dc_error_has_no_error(err))
+    if(shutdown_flag)
     {
-        ret_val = ACCEPT;
+        ret_val = SHUTDOWN;
     }
     else
     {
-        if(shutdown_flag)
+        if(dc_error_has_no_error(err))
         {
-            ret_val = SHUTDOWN;
+            ret_val = ACCEPT;
         }
         else
         {
