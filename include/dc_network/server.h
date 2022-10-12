@@ -68,34 +68,32 @@ void dc_server_lifecycle_destroy(const struct dc_posix_env *env,
  *
  * @param env
  * @param lifecycle
- * @param create_settings
+ * @param creater
  */
 void dc_server_lifecycle_set_create_settings(
     const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*create_settings)(const struct dc_posix_env *env,
-                            struct dc_error *err, void *arg));
+    void (*creater)(const struct dc_posix_env *env,
+                    struct dc_error *err, void *arg));
 
 /**
  *
  * @param env
  * @param lifecycle
- * @param create_socket
+ * @param creator
  */
 void dc_server_lifecycle_set_create_socket(
     const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*create_socket)(const struct dc_posix_env *env, struct dc_error *err,
-                          void *arg));
+    void (*creator)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
 
 /**
  *
  * @param env
  * @param lifecycle
- * @param set_sockopts
+ * @param setter
  */
 void dc_server_lifecycle_set_set_sockopts(
     const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err,
-                         void *arg));
+    void (*setter)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
 
 /**
  *
@@ -120,17 +118,18 @@ void dc_server_lifecycle_set_listen(
     void (*listen)(const struct dc_posix_env *env, struct dc_error *err,
                    void *arg));
 
+
 /**
  *
  * @param env
  * @param lifecycle
- * @param setup
+ * @param setuper
  */
 void dc_server_lifecycle_set_setup(const struct dc_posix_env *env,
                                    struct dc_server_lifecycle *lifecycle,
-                                   void (*setup)(const struct dc_posix_env *env,
-                                                 struct dc_error *err,
-                                                 void *arg));
+                                   void (*setuper)(const struct dc_posix_env *env,
+                                                   struct dc_error *err,
+                                                   void *arg));
 
 /**
  *
@@ -158,12 +157,11 @@ void dc_server_lifecycle_set_shutdown(
  *
  * @param env
  * @param lifecycle
- * @param destroy_settings
+ * @param destroyer
  */
 void dc_server_lifecycle_set_destroy_settings(
     const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*destroy_settings)(const struct dc_posix_env *env,
-                             struct dc_error *err, void *arg));
+    void (*destroyer)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
 
 /**
  *
