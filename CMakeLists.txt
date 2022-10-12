@@ -147,11 +147,11 @@ endif ()
 
 add_library(dc_network SHARED ${SOURCE_LIST} ${HEADER_LIST})
 target_include_directories(dc_network PRIVATE include/dc_network)
+target_include_directories(dc_network PRIVATE /usr/local/include)
+target_link_directories(dc_network PRIVATE /usr/local/lib)
 
 if (NOT APPLE)
     target_include_directories(dc_network PRIVATE /usr/include)
-    target_include_directories(dc_network PRIVATE /usr/local/include)
-    target_link_directories(dc_network PRIVATE /usr/local/lib)
 endif ()
 
 set_target_properties(dc_network PROPERTIES
