@@ -19,6 +19,7 @@
 #include <dc_c/dc_string.h>
 #include <dc_posix/dc_netdb.h>
 #include <dc_posix/sys/dc_socket.h>
+#include <netinet/in.h>
 
 
 void dc_network_get_addresses(const struct dc_env *env,

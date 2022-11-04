@@ -20,6 +20,8 @@
 
 
 #include <dc_env/env.h>
+#include <inttypes.h>
+#include <arpa/inet.h>
 #include <netdb.h>
 
 
