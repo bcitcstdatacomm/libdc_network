@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
+
 #include "common.h"
+#include <dc_c/dc_string.h>
 #include <dc_posix/dc_netdb.h>
-#include <dc_posix/dc_string.h>
 #include <dc_posix/sys/dc_socket.h>
 #include <netinet/in.h>
 
-void dc_network_get_addresses(const struct dc_posix_env *env,
+
+void dc_network_get_addresses(const struct dc_env *env,
                               struct dc_error           *err,
                               int                        family,
                               int                        sock_type,
@@ -37,7 +39,7 @@ void dc_network_get_addresses(const struct dc_posix_env *env,
     dc_getaddrinfo(env, err, hostname, NULL, &hints, result);
 }
 
-int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *err, struct addrinfo *addr)
+int dc_network_create_socket(const struct dc_env *env, struct dc_error *err, struct addrinfo *addr)
 {
     int socket_fd;
 
@@ -48,7 +50,7 @@ int dc_network_create_socket(const struct dc_posix_env *env, struct dc_error *er
     return socket_fd;
 }
 
-void dc_network_bind(const struct dc_posix_env *env,
+void dc_network_bind(const struct dc_env *env,
                      struct dc_error           *err,
                      int                        socket_fd,
                      struct sockaddr           *sockaddr,
@@ -90,13 +92,13 @@ void dc_network_bind(const struct dc_posix_env *env,
     }
 }
 
-void dc_network_listen(const struct dc_posix_env *env, struct dc_error *err, int socket_fd, int backlog)
+void dc_network_listen(const struct dc_env *env, struct dc_error *err, int socket_fd, int backlog)
 {
     DC_TRACE(env);
     dc_listen(env, err, socket_fd, backlog);
 }
 
-int dc_network_accept(const struct dc_posix_env *env, struct dc_error *err, int server_socket_fd)
+int dc_network_accept(const struct dc_env *env, struct dc_error *err, int server_socket_fd)
 {
     int client_socket_fd;
 

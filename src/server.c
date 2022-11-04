@@ -14,44 +14,31 @@
  * limitations under the License.
  */
 
+
 #include "server.h"
+#include <dc_c/dc_stdlib.h>
+#include <dc_c/dc_string.h>
 #include <dc_fsm/fsm.h>
-#include <dc_posix/dc_stdlib.h>
-#include <dc_posix/dc_string.h>
 
-static int create_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 
-static int create_socket(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+static int create_settings(const struct dc_env *env, struct dc_error *err, void *arg);
+static int create_socket(const struct dc_env *env, struct dc_error *err, void *arg);
+static int set_sockopts(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_bind(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_listen(const struct dc_env *env, struct dc_error *err, void *arg);
+static int setup(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_accept(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_shutdown(const struct dc_env *env, struct dc_error *err, void *arg);
+static int destroy_settings(const struct dc_env *env, struct dc_error *err, void *arg);
+static int create_settings_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int create_socket_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int set_sockopts_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_bind_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int do_listen_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int setup_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int accept_error(const struct dc_env *env, struct dc_error *err, void *arg);
+static int shutdown_error(const struct dc_env *env, struct dc_error *err, void *arg);
 
-static int set_sockopts(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int destroy_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int create_settings_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int create_socket_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int set_sockopts_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_bind_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int do_listen_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int setup_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int accept_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
-
-static int shutdown_error(const struct dc_posix_env *env, struct dc_error *err, void *arg);
 
 enum application_states
 {
@@ -76,25 +63,25 @@ enum application_states
 
 struct dc_server_lifecycle
 {
-    void (*create_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*create_settings)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*create_socket)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*create_socket)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*set_sockopts)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*set_sockopts)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*bind)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*listen)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*setup)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*setup)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, int *client_socket_fd, void *arg);
+    bool (*accept)(const struct dc_env *env, struct dc_error *err, int *client_socket_fd, void *arg);
 
-    bool (*request_handler)(const struct dc_posix_env *env, struct dc_error *err, int client_socket_fd, void *arg);
+    bool (*request_handler)(const struct dc_env *env, struct dc_error *err, int client_socket_fd, void *arg);
 
-    void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*shutdown)(const struct dc_env *env, struct dc_error *err, void *arg);
 
-    void (*destroy_settings)(const struct dc_posix_env *env, struct dc_error *err, void *arg);
+    void (*destroy_settings)(const struct dc_env *env, struct dc_error *err, void *arg);
 };
 
 struct dc_server_info
@@ -105,7 +92,7 @@ struct dc_server_info
     void                       *configuration;
 };
 
-struct dc_server_lifecycle *dc_server_lifecycle_create(const struct dc_posix_env *env, struct dc_error *err)
+struct dc_server_lifecycle *dc_server_lifecycle_create(const struct dc_env *env, struct dc_error *err)
 {
     struct dc_server_lifecycle *lifecycle;
 
@@ -119,16 +106,16 @@ struct dc_server_lifecycle *dc_server_lifecycle_create(const struct dc_posix_env
     return lifecycle;
 }
 
-void dc_server_lifecycle_destroy(const struct dc_posix_env *env, struct dc_server_lifecycle **plifecycle)
+void dc_server_lifecycle_destroy(const struct dc_env *env, struct dc_server_lifecycle **plifecycle)
 {
     DC_TRACE(env);
-    dc_free(env, *plifecycle, sizeof(struct dc_server_lifecycle));
+    dc_free(env, *plifecycle);
     *plifecycle = NULL;
 }
 
-void dc_server_lifecycle_set_create_settings(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_create_settings(const struct dc_env  *env,
                                              struct dc_server_lifecycle *lifecycle,
-                                             void (*creater)(const struct dc_posix_env *env,
+                                             void (*creater)(const struct dc_env *env,
                                                              struct dc_error           *err,
                                                              void                      *arg))
 {
@@ -136,9 +123,9 @@ void dc_server_lifecycle_set_create_settings(const struct dc_posix_env  *env,
     lifecycle->create_settings = creater;
 }
 
-void dc_server_lifecycle_set_create_socket(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_create_socket(const struct dc_env  *env,
                                            struct dc_server_lifecycle *lifecycle,
-                                           void (*creator)(const struct dc_posix_env *env,
+                                           void (*creator)(const struct dc_env *env,
                                                            struct dc_error           *err,
                                                            void                      *arg))
 {
@@ -146,9 +133,9 @@ void dc_server_lifecycle_set_create_socket(const struct dc_posix_env  *env,
     lifecycle->create_socket = creator;
 }
 
-void dc_server_lifecycle_set_set_sockopts(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_set_sockopts(const struct dc_env  *env,
                                           struct dc_server_lifecycle *lifecycle,
-                                          void (*setter)(const struct dc_posix_env *env,
+                                          void (*setter)(const struct dc_env *env,
                                                          struct dc_error           *err,
                                                          void                      *arg))
 {
@@ -156,50 +143,50 @@ void dc_server_lifecycle_set_set_sockopts(const struct dc_posix_env  *env,
     lifecycle->set_sockopts = setter;
 }
 
-void dc_server_lifecycle_set_bind(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_bind(const struct dc_env  *env,
                                   struct dc_server_lifecycle *lifecycle,
-                                  void (*bind)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+                                  void (*bind)(const struct dc_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->bind = bind;
 }
 
-void dc_server_lifecycle_set_listen(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_listen(const struct dc_env  *env,
                                     struct dc_server_lifecycle *lifecycle,
-                                    void (*listen)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+                                    void (*listen)(const struct dc_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->listen = listen;
 }
 
-void dc_server_lifecycle_set_setup(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_setup(const struct dc_env  *env,
                                    struct dc_server_lifecycle *lifecycle,
-                                   void (*setuper)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+                                   void (*setuper)(const struct dc_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->setup = setuper;
 }
 
 void dc_server_lifecycle_set_accept(
-    const struct dc_posix_env  *env,
+    const struct dc_env  *env,
     struct dc_server_lifecycle *lifecycle,
-    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err, int *client_socket_fd, void *arg))
+    bool (*accept)(const struct dc_env *env, struct dc_error *err, int *client_socket_fd, void *arg))
 {
     DC_TRACE(env);
     lifecycle->accept = accept;
 }
 
-void dc_server_lifecycle_set_shutdown(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_shutdown(const struct dc_env  *env,
                                       struct dc_server_lifecycle *lifecycle,
-                                      void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err, void *arg))
+                                      void (*shutdown)(const struct dc_env *env, struct dc_error *err, void *arg))
 {
     DC_TRACE(env);
     lifecycle->shutdown = shutdown;
 }
 
-void dc_server_lifecycle_set_destroy_settings(const struct dc_posix_env  *env,
+void dc_server_lifecycle_set_destroy_settings(const struct dc_env  *env,
                                               struct dc_server_lifecycle *lifecycle,
-                                              void (*destroyer)(const struct dc_posix_env *env,
+                                              void (*destroyer)(const struct dc_env *env,
                                                                 struct dc_error           *err,
                                                                 void                      *arg))
 {
@@ -207,7 +194,7 @@ void dc_server_lifecycle_set_destroy_settings(const struct dc_posix_env  *env,
     lifecycle->destroy_settings = destroyer;
 }
 
-struct dc_server_info *dc_server_info_create(const struct dc_posix_env *env,
+struct dc_server_info *dc_server_info_create(const struct dc_env *env,
                                              struct dc_error           *err,
                                              const char                *name,
                                              FILE                      *verbose_file,
@@ -238,7 +225,7 @@ struct dc_server_info *dc_server_info_create(const struct dc_posix_env *env,
     return info;
 }
 
-void dc_server_info_destroy(const struct dc_posix_env *env, struct dc_server_info **pinfo)
+void dc_server_info_destroy(const struct dc_env *env, struct dc_server_info **pinfo)
 {
     struct dc_server_info *info;
 
@@ -247,22 +234,19 @@ void dc_server_info_destroy(const struct dc_posix_env *env, struct dc_server_inf
 
     if(info->name)
     {
-        size_t length;
-
-        length = dc_strlen(env, info->name);
-        dc_free(env, info->name, length);
+        dc_free(env, info->name);
     }
 
-    dc_free(env, *pinfo, sizeof(struct dc_server_info));
+    dc_free(env, *pinfo);
     *pinfo = NULL;
 }
 
-int dc_server_run(const struct dc_posix_env *env,
+int dc_server_run(const struct dc_env *env,
                   struct dc_error           *err,
                   struct dc_server_info     *info,
-                  struct dc_server_lifecycle *(*create_lifecycle_func)(const struct dc_posix_env *env,
+                  struct dc_server_lifecycle *(*create_lifecycle_func)(const struct dc_env *env,
                                                                        struct dc_error           *err),
-                  void (*destroy_lifecycle_func)(const struct dc_posix_env   *env,
+                  void (*destroy_lifecycle_func)(const struct dc_env   *env,
                                                  struct dc_server_lifecycle **plifecycle))
 {
     int ret_val;
@@ -327,7 +311,7 @@ int dc_server_run(const struct dc_posix_env *env,
     return ret_val;
 }
 
-static int create_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int create_settings(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -348,7 +332,7 @@ static int create_settings(const struct dc_posix_env *env, struct dc_error *err,
     return ret_val;
 }
 
-static int create_socket(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int create_socket(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -369,7 +353,7 @@ static int create_socket(const struct dc_posix_env *env, struct dc_error *err, v
     return ret_val;
 }
 
-static int set_sockopts(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int set_sockopts(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -394,7 +378,7 @@ static int set_sockopts(const struct dc_posix_env *env, struct dc_error *err, vo
     return ret_val;
 }
 
-static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int do_bind(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -415,7 +399,7 @@ static int do_bind(const struct dc_posix_env *env, struct dc_error *err, void *a
     return ret_val;
 }
 
-static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int do_listen(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -436,7 +420,7 @@ static int do_listen(const struct dc_posix_env *env, struct dc_error *err, void 
     return ret_val;
 }
 
-static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int setup(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -461,7 +445,7 @@ static int setup(const struct dc_posix_env *env, struct dc_error *err, void *arg
     return ret_val;
 }
 
-static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int do_accept(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -491,7 +475,7 @@ static int do_accept(const struct dc_posix_env *env, struct dc_error *err, void 
     return ret_val;
 }
 
-static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int do_shutdown(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
     int                    ret_val;
@@ -512,7 +496,7 @@ static int do_shutdown(const struct dc_posix_env *env, struct dc_error *err, voi
     return ret_val;
 }
 
-static int destroy_settings(const struct dc_posix_env *env, struct dc_error *err, void *arg)
+static int destroy_settings(const struct dc_env *env, struct dc_error *err, void *arg)
 {
     struct dc_server_info *info;
 
@@ -524,7 +508,7 @@ static int destroy_settings(const struct dc_posix_env *env, struct dc_error *err
     return DC_FSM_EXIT;
 }
 
-static int create_settings_error(const struct dc_posix_env               *env,
+static int create_settings_error(const struct dc_env               *env,
                                  __attribute__((unused)) struct dc_error *err,
                                  __attribute__((unused)) void            *arg)
 {
@@ -533,7 +517,7 @@ static int create_settings_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int create_socket_error(const struct dc_posix_env               *env,
+static int create_socket_error(const struct dc_env               *env,
                                __attribute__((unused)) struct dc_error *err,
                                __attribute__((unused)) void            *arg)
 {
@@ -542,7 +526,7 @@ static int create_socket_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int set_sockopts_error(const struct dc_posix_env               *env,
+static int set_sockopts_error(const struct dc_env               *env,
                               __attribute__((unused)) struct dc_error *err,
                               __attribute__((unused)) void            *arg)
 {
@@ -551,7 +535,7 @@ static int set_sockopts_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int do_bind_error(const struct dc_posix_env               *env,
+static int do_bind_error(const struct dc_env               *env,
                          __attribute__((unused)) struct dc_error *err,
                          __attribute__((unused)) void            *arg)
 {
@@ -560,7 +544,7 @@ static int do_bind_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int do_listen_error(const struct dc_posix_env               *env,
+static int do_listen_error(const struct dc_env               *env,
                            __attribute__((unused)) struct dc_error *err,
                            __attribute__((unused)) void            *arg)
 {
@@ -569,7 +553,7 @@ static int do_listen_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int setup_error(const struct dc_posix_env               *env,
+static int setup_error(const struct dc_env               *env,
                        __attribute__((unused)) struct dc_error *err,
                        __attribute__((unused)) void            *arg)
 {
@@ -578,7 +562,7 @@ static int setup_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int accept_error(const struct dc_posix_env               *env,
+static int accept_error(const struct dc_env               *env,
                         __attribute__((unused)) struct dc_error *err,
                         __attribute__((unused)) void            *arg)
 {
@@ -587,7 +571,7 @@ static int accept_error(const struct dc_posix_env               *env,
     return DESTROY_SETTINGS;
 }
 
-static int shutdown_error(const struct dc_posix_env               *env,
+static int shutdown_error(const struct dc_env               *env,
                           __attribute__((unused)) struct dc_error *err,
                           __attribute__((unused)) void            *arg)
 {

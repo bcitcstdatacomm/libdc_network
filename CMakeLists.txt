@@ -164,10 +164,14 @@ set_target_properties(dc_network PROPERTIES
         SOVERSION ${PROJECT_VERSION_MAJOR})
 
 find_library(LIBDC_ERROR dc_error REQUIRED)
+find_library(LIBDC_ENV dc_env REQUIRED)
+find_library(LIBDC_C dc_c REQUIRED)
 find_library(LIBDC_POSIX dc_posix REQUIRED)
 find_library(LIBDC_FSM dc_fsm REQUIRED)
 
 target_link_libraries(dc_network PUBLIC ${LIBDC_ERROR})
+target_link_libraries(dc_network PUBLIC ${LIBDC_ENV})
+target_link_libraries(dc_network PUBLIC ${LIBDC_C})
 target_link_libraries(dc_network PUBLIC ${LIBDC_POSIX})
 target_link_libraries(dc_network PUBLIC ${LIBDC_FSM})
 

@@ -1,6 +1,7 @@
 #ifndef LIBDC_NETWORK_SERVER_H
 #define LIBDC_NETWORK_SERVER_H
 
+
 /*
  * Copyright 2021-2021 D'Arcy Smith.
  *
@@ -17,8 +18,10 @@
  * limitations under the License.
  */
 
-#include <dc_posix/dc_posix_env.h>
+
+#include <dc_env/env.h>
 #include <stdio.h>
+
 
 struct dc_server_info;
 struct dc_server_lifecycle;
@@ -32,7 +35,7 @@ struct dc_server_lifecycle;
  * @param configuration
  * @return
  */
-struct dc_server_info *dc_server_info_create(const struct dc_posix_env *env,
+struct dc_server_info *dc_server_info_create(const struct dc_env *env,
                                              struct dc_error *err,
                                              const char *name,
                                              FILE *verbose_file,
@@ -43,7 +46,7 @@ struct dc_server_info *dc_server_info_create(const struct dc_posix_env *env,
  * @param env
  * @param pinfo
  */
-void dc_server_info_destroy(const struct dc_posix_env *env,
+void dc_server_info_destroy(const struct dc_env *env,
                             struct dc_server_info **pinfo);
 
 /**
@@ -53,7 +56,7 @@ void dc_server_info_destroy(const struct dc_posix_env *env,
  * @return
  */
 struct dc_server_lifecycle *
-dc_server_lifecycle_create(const struct dc_posix_env *env,
+dc_server_lifecycle_create(const struct dc_env *env,
                            struct dc_error *err);
 
 /**
@@ -61,7 +64,7 @@ dc_server_lifecycle_create(const struct dc_posix_env *env,
  * @param env
  * @param plifecycle
  */
-void dc_server_lifecycle_destroy(const struct dc_posix_env *env,
+void dc_server_lifecycle_destroy(const struct dc_env *env,
                                  struct dc_server_lifecycle **plifecycle);
 
 /**
@@ -71,8 +74,8 @@ void dc_server_lifecycle_destroy(const struct dc_posix_env *env,
  * @param creater
  */
 void dc_server_lifecycle_set_create_settings(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*creater)(const struct dc_posix_env *env,
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*creater)(const struct dc_env *env,
                     struct dc_error *err, void *arg));
 
 /**
@@ -82,8 +85,8 @@ void dc_server_lifecycle_set_create_settings(
  * @param creator
  */
 void dc_server_lifecycle_set_create_socket(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*creator)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*creator)(const struct dc_env *env, struct dc_error *err, void *arg));
 
 /**
  *
@@ -92,8 +95,8 @@ void dc_server_lifecycle_set_create_socket(
  * @param setter
  */
 void dc_server_lifecycle_set_set_sockopts(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*setter)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*setter)(const struct dc_env *env, struct dc_error *err, void *arg));
 
 /**
  *
@@ -101,9 +104,9 @@ void dc_server_lifecycle_set_set_sockopts(
  * @param lifecycle
  * @param bind
  */
-void dc_server_lifecycle_set_bind(const struct dc_posix_env *env,
+void dc_server_lifecycle_set_bind(const struct dc_env *env,
                                   struct dc_server_lifecycle *lifecycle,
-                                  void (*bind)(const struct dc_posix_env *env,
+                                  void (*bind)(const struct dc_env *env,
                                                struct dc_error *err,
                                                void *arg));
 
@@ -114,8 +117,8 @@ void dc_server_lifecycle_set_bind(const struct dc_posix_env *env,
  * @param listen
  */
 void dc_server_lifecycle_set_listen(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*listen)(const struct dc_posix_env *env, struct dc_error *err,
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*listen)(const struct dc_env *env, struct dc_error *err,
                    void *arg));
 
 
@@ -125,9 +128,9 @@ void dc_server_lifecycle_set_listen(
  * @param lifecycle
  * @param setuper
  */
-void dc_server_lifecycle_set_setup(const struct dc_posix_env *env,
+void dc_server_lifecycle_set_setup(const struct dc_env *env,
                                    struct dc_server_lifecycle *lifecycle,
-                                   void (*setuper)(const struct dc_posix_env *env,
+                                   void (*setuper)(const struct dc_env *env,
                                                    struct dc_error *err,
                                                    void *arg));
 
@@ -138,8 +141,8 @@ void dc_server_lifecycle_set_setup(const struct dc_posix_env *env,
  * @param accept
  */
 void dc_server_lifecycle_set_accept(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    bool (*accept)(const struct dc_posix_env *env, struct dc_error *err,
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    bool (*accept)(const struct dc_env *env, struct dc_error *err,
                    int *client_socket_fd, void *arg));
 
 /**
@@ -149,8 +152,8 @@ void dc_server_lifecycle_set_accept(
  * @param shutdown
  */
 void dc_server_lifecycle_set_shutdown(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*shutdown)(const struct dc_posix_env *env, struct dc_error *err,
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*shutdown)(const struct dc_env *env, struct dc_error *err,
                      void *arg));
 
 /**
@@ -160,8 +163,8 @@ void dc_server_lifecycle_set_shutdown(
  * @param destroyer
  */
 void dc_server_lifecycle_set_destroy_settings(
-    const struct dc_posix_env *env, struct dc_server_lifecycle *lifecycle,
-    void (*destroyer)(const struct dc_posix_env *env, struct dc_error *err, void *arg));
+    const struct dc_env *env, struct dc_server_lifecycle *lifecycle,
+    void (*destroyer)(const struct dc_env *env, struct dc_error *err, void *arg));
 
 /**
  *
@@ -173,11 +176,11 @@ void dc_server_lifecycle_set_destroy_settings(
  * @return
  */
 int dc_server_run(
-    const struct dc_posix_env *env, struct dc_error *err,
+    const struct dc_env *env, struct dc_error *err,
     struct dc_server_info *info,
     struct dc_server_lifecycle *(*create_lifecycle_func)(
-        const struct dc_posix_env *env, struct dc_error *err),
-    void (*destroy_lifecycle_func)(const struct dc_posix_env *env,
+        const struct dc_env *env, struct dc_error *err),
+    void (*destroy_lifecycle_func)(const struct dc_env *env,
                                    struct dc_server_lifecycle **plifecycle));
 
 #endif // LIBDC_NETWORK_SERVER_H
