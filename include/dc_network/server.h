@@ -3,7 +3,7 @@
 
 
 /*
- * Copyright 2021-2021 D'Arcy Smith.
+ * Copyright 2021-2022 D'Arcy Smith.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,12 @@
 
 #include <dc_env/env.h>
 #include <stdio.h>
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 
 struct dc_server_info;
@@ -182,5 +188,11 @@ int dc_server_run(
         const struct dc_env *env, struct dc_error *err),
     void (*destroy_lifecycle_func)(const struct dc_env *env,
                                    struct dc_server_lifecycle **plifecycle));
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif // LIBDC_NETWORK_SERVER_H

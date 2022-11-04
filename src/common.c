@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2021 D'Arcy Smith.
+ * Copyright 2021-2022 D'Arcy Smith.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #include <dc_c/dc_string.h>
 #include <dc_posix/dc_netdb.h>
 #include <dc_posix/sys/dc_socket.h>
-#include <netinet/in.h>
 
 
 void dc_network_get_addresses(const struct dc_env *env,
