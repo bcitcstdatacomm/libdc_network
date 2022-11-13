@@ -15,7 +15,7 @@
  */
 
 
-#include "common.h"
+#include "dc_network/common.h"
 #include <dc_c/dc_string.h>
 #include <dc_posix/dc_netdb.h>
 #include <dc_posix/sys/dc_socket.h>

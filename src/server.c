@@ -15,7 +15,7 @@
  */
 
 
-#include "server.h"
+#include "dc_network/server.h"
 #include <dc_c/dc_stdlib.h>
 #include <dc_c/dc_string.h>
 #include <dc_fsm/fsm.h>
